@@ -393,7 +393,7 @@
           </div>
           <div style="text-align: right;">
             <p style="opacity: 0.8; font-size: 0.85rem;">Available Balance</p>
-            <div class="balance-val" id="bannerBalance">$0.00</div>
+            <div class="balance-val" id="bannerBalance">₹0.00</div>
           </div>
         </div>
 
@@ -418,7 +418,7 @@
 
             <form onsubmit="processTransaction(event)">
               <div class="form-group">
-                <label for="txAmount">Amount ($)</label>
+                <label for="txAmount">Amount (₹)</label>
                 <input type="number" id="txAmount" class="form-control" min="0.01" step="0.01" required>
               </div>
               <button type="submit" class="btn btn-primary" id="txSubmitBtn">
@@ -516,7 +516,7 @@
             <input type="password" id="newPin" class="form-control" required>
           </div>
           <div class="form-group">
-            <label for="newBalance">Initial Deposit ($)</label>
+            <label for="newBalance">Initial Deposit (₹)</label>
             <input type="number" id="newBalance" class="form-control" min="0" step="0.01" required>
           </div>
         </div>
@@ -543,8 +543,8 @@
       <div class="receipt-line"><span>Account Holder:</span><span id="rcptHolder"></span></div>
       <div class="receipt-line"><span>Account No:</span><span id="rcptAcc"></span></div>
       <div class="receipt-line"><span>Operation:</span><strong id="rcptType"></strong></div>
-      <div class="receipt-line"><span>Amount:</span><strong id="rcptAmt">$0.00</strong></div>
-      <div class="receipt-line total"><span>Updated Balance:</span><span id="rcptBal">$0.00</span></div>
+      <div class="receipt-line"><span>Amount:</span><strong id="rcptAmt">₹0.00</strong></div>
+      <div class="receipt-line total"><span>Updated Balance:</span><span id="rcptBal">₹0.00</span></div>
 
       <div class="receipt-actions">
         <button class="btn btn-primary" onclick="window.print()">
@@ -558,7 +558,7 @@
   </div>
 
   <script>
-    const DB_KEY = 'ABC_BANK_DB_V4';
+    const DB_KEY = 'ABC_BANK_DB_INR';
 
     // Initial database: Only Admin is available at first time
     const defaultDatabase = {
@@ -640,7 +640,7 @@
         
         document.getElementById('bannerName').textContent = currentUser.name;
         document.getElementById('bannerAcc').textContent = currentUser.accNo;
-        document.getElementById('bannerBalance').textContent = `$${currentUser.balance.toFixed(2)}`;
+        document.getElementById('bannerBalance').textContent = `₹${currentUser.balance.toFixed(2)}`;
 
         renderHistory();
       }
@@ -655,7 +655,7 @@
         const isDep = tx.type === 'Deposit';
         tr.innerHTML = `
           <td><strong>${tx.type}</strong></td>
-          <td class="${isDep ? 'credit' : 'debit'}">${isDep ? '+' : '-'}$${tx.amount.toFixed(2)}</td>
+          <td class="${isDep ? 'credit' : 'debit'}">${isDep ? '+' : '-'}₹${tx.amount.toFixed(2)}</td>
           <td>${tx.timestamp}</td>
         `;
         tbody.appendChild(tr);
@@ -679,7 +679,7 @@
             <td>${item.name}</td>
             <td>${item.dob}</td>
             <td>${item.address}</td>
-            <td style="font-weight:700;">$${item.balance.toFixed(2)}</td>
+            <td style="font-weight:700;">₹${item.balance.toFixed(2)}</td>
             <td>
               <button class="btn btn-secondary" style="width:auto; padding:0.25rem 0.6rem; font-size:0.8rem;" onclick="resetAccount('${accNo}')">
                 <span class="material-symbols-outlined" style="font-size:1rem;">restart_alt</span> Reset Balance
@@ -740,7 +740,7 @@
         userRecord.balance += val;
       }
 
-      const timestamp = new Date().toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
+      const timestamp = new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' });
       const txType = activeTab === 'deposit' ? 'Deposit' : 'Withdrawal';
 
       lastTx = {
@@ -826,8 +826,8 @@
       document.getElementById('rcptHolder').textContent = currentUser.name;
       document.getElementById('rcptAcc').textContent = currentUser.accNo;
       document.getElementById('rcptType').textContent = lastTx.type;
-      document.getElementById('rcptAmt').textContent = `$${lastTx.amount.toFixed(2)}`;
-      document.getElementById('rcptBal').textContent = `$${lastTx.updatedBalance.toFixed(2)}`;
+      document.getElementById('rcptAmt').textContent = `₹${lastTx.amount.toFixed(2)}`;
+      document.getElementById('rcptBal').textContent = `₹${lastTx.updatedBalance.toFixed(2)}`;
 
       document.getElementById('receiptModal').style.display = 'flex';
     }
